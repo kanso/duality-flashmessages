@@ -20,7 +20,7 @@
  * Module dependencies
  */
 
-var utils = require('kanso/utils'),
+var utils = require('duality/utils'),
     cookies = require('cookies'),
     _ = require('underscore');
 
@@ -36,7 +36,7 @@ var utils = require('kanso/utils'),
  */
 
 exports.readRequestCookie = function (req) {
-    var cookie = req.cookie._kanso_flash;
+    var cookie = req.cookie._duality_flash;
     var messages = cookie ? JSON.parse(unescape(cookie)): [];
     return _.map(messages, function (val) {
         val.incoming = true;
@@ -55,7 +55,7 @@ exports.readRequestCookie = function (req) {
  */
 
 exports.readBrowserCookie = function () {
-    var cookie = cookies.readBrowserCookie('_kanso_flash');
+    var cookie = cookies.readBrowserCookie('_duality_flash');
     var messages = cookie ? JSON.parse(unescape(cookie)): [];
     return _.map(messages, function (val) {
         val.incoming = true;
@@ -156,9 +156,9 @@ exports.updateResponse = function (req, res) {
     }
     else {
         cookies.setResponseCookie(req, res, {
-            name: '_kanso_flash',
+            name: '_duality_flash',
             value: JSON.stringify(messages),
-            path: require('kanso/core').getBaseURL(req) + '/'
+            path: require('duality/core').getBaseURL(req) + '/'
         });
     }
     return res;
@@ -193,9 +193,9 @@ exports.createMessage = function (req, msg) {
 
 exports.setBrowserCookie = function (req, messages) {
     cookies.setBrowserCookie(req, {
-        name: '_kanso_flash',
+        name: '_duality_flash',
         value: JSON.stringify(messages),
-        path: require('kanso/core').getBaseURL(req) + '/'
+        path: require('duality/core').getBaseURL(req) + '/'
     });
 };
 
